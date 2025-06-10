@@ -1,0 +1,24 @@
+name: Velodrome Price Check
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # 毎5分
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Run script
+        env:
+          BOT_TOKEN: ${{ secrets.8189244055:AAFZ1-keCZH3y7X2NTojhd3rwqniqLH2Cfg }}
+          CHAT_ID: ${{ secrets.8189244055 }}
+        run: python check_price.py
