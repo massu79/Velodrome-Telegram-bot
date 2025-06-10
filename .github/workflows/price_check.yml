@@ -19,6 +19,6 @@ jobs:
         run: pip install requests
       - name: Run script
         env:
-          BOT_TOKEN: ${{ secrets.8189244055:AAFZ1-keCZH3y7X2NTojhd3rwqniqLH2Cfg }}
-          CHAT_ID: ${{ secrets.8189244055 }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
         run: python check_price.py
