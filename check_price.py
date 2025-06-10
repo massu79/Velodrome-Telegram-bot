@@ -1,13 +1,18 @@
 import requests
 import os
 
-def get_price():
+def _get_price():
     url = "https://api.velodrome.finance/api/v1/pairs"
     res = requests.get(url).json()
     for pool in res["data"]:
         if pool["name"] == "USDC/OP":
             return float(pool["price_usd"])
     return None
+
+def get_price():
+    url = "https://api.coingecko.com/api/v3/simple/price?ids=optimism&vs_currencies=usd"
+    res = requests.get(url).json()
+    return res["optimism"]["usd"]
 
 def send_telegram(message):
     token = os.environ["BOT_TOKEN"]
