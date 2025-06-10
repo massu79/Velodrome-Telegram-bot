@@ -9,18 +9,19 @@ def get_price():
             return float(pool["price_usd"])
     return None
 
-def send_line_notify(message, token):
-    headers = {"Authorization": f"Bearer {token}"}
-    data = {"message": message}
-    requests.post("https://notify-api.line.me/api/notify", headers=headers, data=data)
+def send_telegram(message):
+    token = os.environ["BOT_TOKEN"]
+    chat_id = os.environ["CHAT_ID"]
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    data = {"chat_id": chat_id, "text": message}
+    requests.post(url, data=data)
 
 if __name__ == "__main__":
     price = get_price()
     low = 1.10
     high = 1.30
-    token = os.environ.get("LINE_NOTIFY_TOKEN")
 
     if price is None:
-        send_line_notify("⚠️ Velodrome価格取得失敗", token)
+        send_telegram("⚠️ Velodrome価格取得失敗")
     elif not (low <= price <= high):
-        send_line_notify(f"⚠️ レンジ外: 現在価格は {price}", token)
+        send_telegram(f"⚠️ レンジ外: 現在価格は {price}")
